@@ -33,11 +33,11 @@ module mux(a,b,sel,out);
 	reg r;
 
 	always @(posedge clock)
-		r<=d;
+		r<= sel;
 	
 
 
     //Todo: define your logic here 
-	assign out = a?sel == 0:b
+	assign out = a?r == 0:b
       
 endmodule
