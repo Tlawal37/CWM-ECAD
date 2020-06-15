@@ -33,7 +33,7 @@ module logicalunit(
          
       //Todo: add you logic here
 	assign out = 
-		(a&&b == 1)?func[0]:
-		(!a&&b == 1?func[1]:
-		(a&&!b == 1)?func[2]:func[3];
+		func[0]?((a==0)&&(b == 0)):
+		func[1]?((a==0)&&(b == 1)):
+		func[2]?((a==1)&&(b == 0)):func[3];
 endmodule
