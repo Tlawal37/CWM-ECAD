@@ -33,11 +33,10 @@ module mux(a,b,sel,out);
 	reg r;
 
 	always @(sel)
-		#5 r<= sel;
+		r<= sel;
 	
-	wire out 
 
     //Todo: define your logic here 
-	assign out = a?(r == 0):b;
+	assign #5 out =(r == 0)?a:b;
       
 endmodule
