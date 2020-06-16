@@ -22,9 +22,7 @@ reg rst;
 reg enable;
 reg direction;
 reg err;
-
-
-wire counter_out[7:0];
+wire [7:0]counter_out;
 
 //Todo: Clock generation
 initial
@@ -36,27 +34,28 @@ initial
 
 //Todo: User logic
 initial begin 
-  clk = 0;
-  rst = 0;
-  enable = 0;
-  direction  = 0;
-  err = 0;
-  counter_out = 8'b0010;
-
+  rst <= 1;
+  enable <= 0;
+  direction  <= 1;
+  err <= 0;
+  #(CLK_PERIOD)
+  rst <= 0;
+  #(CLK_PERIOD)
+  enable <= 1;
+  counter_out <= 8'b10;
+ 
  	forever begin
          #CLK_PERIOD
-         if ((counter_out!) begin
-           if (counter_out==8'b0000)
-           begin
+         if ((counter_out!==8'b00000011)begin
+           if (counter_out==8'b00000000)begin
              $display("***TEST FAILED! rst ==%d, counter is meant to reset when rst=1***",rst[0]);
              err=1;
-           end
-         end 
-         else if (counter_out == 8'b0001)begin
-           $display("***TEST FAILED! Counting backwards output is %b. expected output is 8'b0011",counter_out);
+		end 
+            else if (counter_out == 8'b00000001)begin
+           $display("***TEST FAILED! Counting backwards output is %b. expected output is 8'b00000011",counter_out);
            err=1;
          end
-         else if (counter_out == 8'b0010)begin
+         else if (counter_out == 8'b00000010)begin
            $display("***TEST FAILED! enable is %d yet output stays the same",enable);
            err=1;
          end
@@ -65,10 +64,13 @@ initial begin
            err=1;
          end
        end
+	else begin 
+	err = 0;
+	end 
      end
 //Todo: Finish test, check for success
 
-initial begin
+	initial begin
         #50 
         if (err==0)
           $display("***TEST PASSED! :) ***");
@@ -76,10 +78,10 @@ initial begin
       end
 
 //Todo: Instantiate counter module
-counter top (.clk(clk),
-		. rst(rst),
-		. direction(direction),
-		. enable(enable),
-		. counter_out(counter_out));
+	counter top (.clk(clk),
+		.rst(rst),
+		.direction(direction),
+		.enable(enable),
+		.counter_out(counter_out));
  
-endmodule 
+endmodule
