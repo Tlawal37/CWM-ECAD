@@ -18,30 +18,30 @@
 
 `timescale 1ns / 100ps
 
-module counter(clk, rst, enable, direction, counter_out[7:0]);
-    //Todo: add ports 
-	input clk;
-	input rst;
-	input enable;
-	input direction;
-	output counter_out[7:0];
+module counter(input clk,
+	input rst,
+	input enable,
+	input direction,
+	output reg [7:0]counter_out);
                     
     //Todo: add registers and wires, if needed
-	reg counter_out[7:0];
+	reg [7:0]counter_reg;
+	wire [7:0]counter_out;
 
     //Todo: add user logic
+	assign counter_out= counter_reg;
 	always @(posedge clk)
 		if (rst == 1)begin
-			counter_out <= 8'b0;
+			counter_reg<= 8'b0;
 		end 
 		else if (enable==0)begin 
-			counter_out<=counter_out;
+			counter_reg<=counter_reg;
 		end 
 		else if (direction==1)begin 
-			counter_out <= counter_out+1;
+			counter_reg<=counter_reg+1;
 		end 
 		else begin
-			counter_out <= counter_out-1;
+			counter_reg<=counter_reg-1;
 		end 
       
 endmodule
