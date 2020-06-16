@@ -38,11 +38,21 @@ initial begin
   enable <= 1;
   direction  <= 1;
   err <= 0;
- 
+  #(CLK_PERIOD)
+  rst <= 0;
+  enable <= 1;
+  direction  <= 1;
+  err <= 0;
+  #(CLK_PERIOD)
+  rst <= 0;
+  enable <= 1;
+  direction  <= 1;
+  err <= 0;
+
    
        forever begin
-         #(CLK_PERIOD*3)
-         if ((counter_out!==8'b00000011)begin
+         #(CLK_PERIOD)
+         if (counter_out!==8'b00000011)begin
          	if (counter_out==8'b00000000)begin
           	   $display("***TEST FAILED! rst ==%d, counter is only meant to reset when rst=1***",rst);
           	   err=1;
