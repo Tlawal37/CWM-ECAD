@@ -38,11 +38,10 @@ initial begin
   enable <= 1;
   direction  <= 1;
   err <= 0;
-  #CLK_PERIOD
-  #CLK_PERIOD
+ 
    
        forever begin
-         #CLK_PERIOD
+         #(CLK_PERIOD*3)
          if ((counter_out!==8'b00000011)begin
          	if (counter_out==8'b00000000)begin
           	   $display("***TEST FAILED! rst ==%d, counter is only meant to reset when rst=1***",rst);
@@ -60,11 +59,11 @@ initial begin
            	   $display("***TEST FAILED! out is %b. Have you written any code yet?***",counter_out);
            	   err=1;
          	end
+		end
           else begin
 		err = 0;
 		end
-	  end 
-      end
+	end
 end 
 //Todo: Finish test, check for success
 
