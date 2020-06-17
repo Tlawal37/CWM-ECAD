@@ -19,7 +19,7 @@ module traffic(input clk,
 	output amber, 
 	output green);
 
-reg [2:0]state 
+reg [2:0]state; 
 
 assign red = state[2];
 assign amber = state[1];

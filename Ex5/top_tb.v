@@ -125,7 +125,7 @@ end
 	traffic top (.clk(clk),
 		.red(red),
 		.amber(amber),
-		.yellow(yellow));
+		.green(green));
  
 endmodule
 
