@@ -22,7 +22,7 @@ module counter(input clk,
 	input rst,
 	input enable,
 	input direction,
-	output reg [7:0]counter_out);
+	output [7:0]counter_out);
                     
     //Todo: add registers and wires, if needed
 	reg [7:0]counter_reg;

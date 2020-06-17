@@ -34,8 +34,8 @@ initial
 
 //Todo: User logic
 initial begin 
-  rst <= 0;
-  enable <= 1;
+  rst <= 1;
+  enable <= 0;
   direction  <= 1;
   err <= 0;
   #(CLK_PERIOD)
@@ -43,15 +43,11 @@ initial begin
   enable <= 1;
   direction  <= 1;
   err <= 0;
-  #(CLK_PERIOD)
-  rst <= 0;
-  enable <= 1;
-  direction  <= 1;
-  err <= 0;
+  
 
    
        forever begin
-         #(CLK_PERIOD)
+         #(CLK_PERIOD*3)
          if (counter_out!==8'b00000011)begin
          	if (counter_out==8'b00000000)begin
           	   $display("***TEST FAILED! rst ==%d, counter is only meant to reset when rst=1***",rst);
