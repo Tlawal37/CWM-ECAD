@@ -21,7 +21,8 @@ reg clk;
 wire red;
 wire yellow;
 wire amber;
-reg state;
+reg err;
+reg [2:0]state;
 
 //Todo: Clock generation
 initial
@@ -32,73 +33,77 @@ initial
      end
 
 //Todo: User logic
+initial begin 
+state<=3'b001;
+err<=0;
+
 forever begin
-	state<=3'b100
-	#(CLK_PERIOD)
-         if (throw!==3'b110)begin
+	state<=3'b100;
+	#CLK_PERIOD
+         if (state!==3'b110)begin
           	   $display("***RED TO AMBER GREEN TEST 1 FAILED!***");
           	   err=1;
 		end 
 	else 
 		   err = 0;
 	#CLK_PERIOD
-	state<=3'b110
-	#(CLK_PERIOD)
-         if (throw!==3'b001)begin
+	state<=3'b110;
+	#CLK_PERIOD
+         if (state!==3'b001)begin
           	   $display("*** AMBER GREEN TO GREEN TEST 1 FAILED!***");
           	   err=1;
 		end 
 	else 
 		   err = 0;
 	#CLK_PERIOD
-	state<=3'b001
-	#(CLK_PERIOD)
-         if (throw!==3'b010)begin
+	state<=3'b001;
+	#CLK_PERIOD
+         if (state==3'b010)begin
           	   $display("***GREEN TO AMBER TEST 1 FAILED!***");
           	   err=1;
 		end 
 	else 
 		   err = 0;
 	#CLK_PERIOD
-	state<=3'b010
+	state<=3'b010;
 	#(CLK_PERIOD)
-         if (throw!==3'b100)begin
+         if (state!==3'b100)begin
           	   $display("***AMBER TO RED TEST 1 FAILED!***");
           	   err=1;
 		end 
 	else 
 		   err = 0;
 	#CLK_PERIOD
-	state<=3'b000
-	#(CLK_PERIOD)
-         if (throw!==3'b001)begin
-          	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
-          	   err=1;
-		end 
-	else 
-		   err = 0;
-#CLK_PERIOD
-	state<=3'b101
-	#(CLK_PERIOD)
-         if (throw!==3'b001)begin
+	state<=3'b000;
+	#CLK_PERIOD
+         if (state!==3'b001)begin
           	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
           	   err=1;
 		end 
 	else 
 		   err = 0;
 	#CLK_PERIOD
-	state<=3'b011
-	#(CLK_PERIOD)
-         if (throw!==3'b001)begin
+	state<=3'b101;
+	#CLK_PERIOD
+         if (state!==3'b001)begin
           	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
           	   err=1;
 		end 
 	else 
 		   err = 0;
 	#CLK_PERIOD
-	state<=3'b111
-	#(CLK_PERIOD)
-         if (throw!==3'b001)begin
+	state<=3'b011;
+	#CLK_PERIOD
+         if (state!==3'b001)begin
+          	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
+          	   err=1;
+		end 
+	else 
+		   err = 0;
+	#CLK_PERIOD
+	state<=3'b111;
+	#CLK_PERIOD
+         if (state!==3'b001)begin
           	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
           	   err=1;
 		end 
@@ -106,6 +111,7 @@ forever begin
 		   err = 0;
 
 end 
+end
 //Todo: Finish test, check for success
 
 	initial begin
@@ -116,7 +122,7 @@ end
       end
 
 //Todo: Instantiate counter module
-	dice top (.clk(clk),
+	traffic top (.clk(clk),
 		.red(red),
 		.amber(amber),
 		.yellow(yellow));
