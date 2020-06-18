@@ -20,6 +20,9 @@ create_fileset -constrset -quiet constraints
 #set_property is_enabled false [get_files ${project_constraints}]
 
 #Todo: Add your IP here
+create_ip -name mult_gen -vendor xilinx.com -library ip -version 12.0 -module_name multiply
+set_property -dict [list CONFIG.Component_Name {multiply} CONFIG.MultType {Parallel_Multiplier} CONFIG.PortAType {Signed} CONFIG.PortAWidth {3} CONFIG.PortBWidth {3} CONFIG.OutputWidthHigh {5} CONFIG.ClockEnable {true}] [get_ips multiply]
+
 
 read_verilog "top.v"
 read_verilog "top_tb.v"
