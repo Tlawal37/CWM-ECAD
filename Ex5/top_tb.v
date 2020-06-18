@@ -19,10 +19,12 @@ parameter CLK_PERIOD = 10;
 //Todo: Regitsers and wires
 reg clk;
 wire red;
-wire yellow;
+wire green;
 wire amber;
 reg err;
-reg [2:0]state;
+wire [2:0]state;
+
+assign state = {red, amber, green};
 
 //Todo: Clock generation
 initial
@@ -34,77 +36,68 @@ initial
 
 //Todo: User logic
 initial begin 
-state<=3'b001;
 err<=0;
 
 forever begin
-	state<=3'b100;
+	#CLK_PERIOD
+         if (state!==3'b001)begin
+          	   $display("***RED TO AMBER GREEN TEST 1 FAILED! state is %d ***",state);
+          	   err=1;
+		end 
+	else 
+		   err = 0;
+	#CLK_PERIOD
+	
+         if (state!==3'b010)begin
+          	   $display("*** AMBER GREEN TO GREEN TEST 2 FAILED!state is %d ***",state);
+          	   err=1;
+		end 
+	else 
+		   err = 0;
+	#CLK_PERIOD
+	
+         if (state!==3'b100)begin
+          	   $display("***GREEN TO AMBER TEST 3 FAILED!state is %d ***",state);
+          	   err=1;
+		end 
+	else 
+		   err = 0;
+	#CLK_PERIOD
+	
+         if (state!==3'b110)begin
+          	   $display("***AMBER TO RED TEST 4 FAILED!state is %d ***",state);
+          	   err=1;
+		end 
+	else 
+		   err = 0;
+	#CLK_PERIOD
+	
+         if (state!==3'b001)begin
+          	   $display("***STATE TEST 5 FAILED!state is %d ***",state);
+          	   err=1;
+		end 
+	else 
+		   err = 0;
+	
+	#CLK_PERIOD
+         if (state!==3'b010)begin
+          	   $display("*** TEST 6 FAILED!state is %d ***",state);
+          	   err=1;
+		end 
+	else 
+		   err = 0;
+	
+	#CLK_PERIOD
+         if (state!==3'b100)begin
+          	   $display("***STATE TEST 7 FAILED!state is %d ***",state);
+          	   err=1;
+		end 
+	else 
+		   err = 0;
+	
 	#CLK_PERIOD
          if (state!==3'b110)begin
-          	   $display("***RED TO AMBER GREEN TEST 1 FAILED!***");
-          	   err=1;
-		end 
-	else 
-		   err = 0;
-	#CLK_PERIOD
-	state<=3'b110;
-	#CLK_PERIOD
-         if (state!==3'b001)begin
-          	   $display("*** AMBER GREEN TO GREEN TEST 1 FAILED!***");
-          	   err=1;
-		end 
-	else 
-		   err = 0;
-	#CLK_PERIOD
-	state<=3'b001;
-	#CLK_PERIOD
-         if (state==3'b010)begin
-          	   $display("***GREEN TO AMBER TEST 1 FAILED!***");
-          	   err=1;
-		end 
-	else 
-		   err = 0;
-	#CLK_PERIOD
-	state<=3'b010;
-	#(CLK_PERIOD)
-         if (state!==3'b100)begin
-          	   $display("***AMBER TO RED TEST 1 FAILED!***");
-          	   err=1;
-		end 
-	else 
-		   err = 0;
-	#CLK_PERIOD
-	state<=3'b000;
-	#CLK_PERIOD
-         if (state!==3'b001)begin
-          	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
-          	   err=1;
-		end 
-	else 
-		   err = 0;
-	#CLK_PERIOD
-	state<=3'b101;
-	#CLK_PERIOD
-         if (state!==3'b001)begin
-          	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
-          	   err=1;
-		end 
-	else 
-		   err = 0;
-	#CLK_PERIOD
-	state<=3'b011;
-	#CLK_PERIOD
-         if (state!==3'b001)begin
-          	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
-          	   err=1;
-		end 
-	else 
-		   err = 0;
-	#CLK_PERIOD
-	state<=3'b111;
-	#CLK_PERIOD
-         if (state!==3'b001)begin
-          	   $display("***ILLEGAL STATE TEST 1 FAILED!***");
+          	   $display("***STATE TEST 8 FAILED!state is %d ***",state);
           	   err=1;
 		end 
 	else 

@@ -27,11 +27,11 @@ assign green = state[0];
 
 always @(posedge clk)
 	case (state) 
-		3'b100: state<= 3'b110;
-		3'b110: state<= 3'b001;
-		3'b001: state<= 3'b010;
-		3'b010: state<= 3'b100;
-		default: state<= 3'b001;
+		3'b100: state= 3'b110;
+		3'b110: state= 3'b001;
+		3'b001: state= 3'b010;
+		3'b010: state= 3'b100;
+		default: state= 3'b001;
 	endcase
 endmodule 
 
