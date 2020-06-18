@@ -7,7 +7,7 @@
 //  using a memory.
 //
 //  inputs:
-//           clk, a[2:0], b[2:0], read
+//           clk, a[2:0], b[2:0]
 //
 //  outputs:
 //           result[4:0]
@@ -18,6 +18,7 @@
 
 
 module times_tables(
+	input read,
 	input clk, enable,
 	input [2:0] a, b,
 	output [5:0] result);
@@ -27,7 +28,8 @@ module times_tables(
 	wire [2:0] b;
 
 
-mybram your_instance_name (
+
+mybram multiplier(
   .clka(clk),    	// input wire clka
   .ena(enable),      	// input wire ena
   .wea(0),      	// input wire [0 : 0] wea

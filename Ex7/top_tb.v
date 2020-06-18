@@ -34,17 +34,21 @@ module top_tb(
      //Stimulus logic
      initial begin
  
-       enable=1;
+       enable=0;
        err=0;
+	a = 3'b000;
+	b = 3'b000;
 	
 	forever begin 
 	#CLK_PERIOD;
-		if(result!==(a*b[3:8]))begin 
+		if(result!==(a*b[8:3]))begin 
 		  	   $display("*** TEST 1 FAILED! result is %d ***",result);
 		  	   err=1;
 			  end 
 		 else
 			   err = 0;
+	a <= a+1;
+	b<=b+1;
 end
 end 
 

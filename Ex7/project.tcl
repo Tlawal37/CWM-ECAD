@@ -20,8 +20,9 @@ create_fileset -constrset -quiet constraints
 #set_property is_enabled false [get_files ${project_constraints}]
 
 #Todo: Add your IP here
-create_ip -name mult_gen -vendor xilinx.com -library ip -version 12.0 -module_name multiply
-set_property -dict [list CONFIG.Component_Name {multiply} CONFIG.MultType {Parallel_Multiplier} CONFIG.PortAType {Signed} CONFIG.PortAWidth {3} CONFIG.PortBWidth {3} CONFIG.OutputWidthHigh {5} CONFIG.ClockEnable {true}] [get_ips multiply]
+create_ip -name blk_mem_gen -vendor xilinx.com -library ip -version 8.4 -module_name mybram
+set_property -dict [list CONFIG.Component_Name {mybram} CONFIG.Write_Width_A {6} CONFIG.Write_Depth_A {64} CONFIG.Read_Width_A {6} CONFIG.Write_Width_B {6} CONFIG.Read_Width_B {6} CONFIG.Load_Init_File {true} CONFIG.Coe_File {/home/centos/CWM-ECAD/Ex7/mybram.coe}] [get_ips mybram]
+
 
 
 read_verilog "top.v"
