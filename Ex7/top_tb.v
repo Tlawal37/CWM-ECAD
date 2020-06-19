@@ -60,11 +60,11 @@ initial begin
       end
 
     //User's module
-    times_tables mybram (
+    times_tables top(
      	.a(a),
     	.result(result),
 	.b(b),
-	.enable(enable),
+	.read(read),
 	.clk(clk)); 
 	
      
