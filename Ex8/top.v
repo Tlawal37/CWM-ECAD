@@ -32,22 +32,20 @@ module times_tables(
  wire rstb_busy;
  wire s_axi_arready;
  wire [31:0]bigresult;
- wire s_axi_arvalid;
+ wire s_axi_rvalid;
+ wire readmodule;
 
 
 
 //Logic 
- assign rsta_busy = rst?1'b1:1'b0;
- assign rstb_busy = rst?1'b1:1'b0;
-
- assign readmodule = read&(rsta_busy==0)&(rstb_busy==0)&s_axi_arready;
+  assign readmodule = read&(rsta_busy==0)&(rstb_busy==0)&s_axi_arready;
 
 
 always @(posedge clk)begin 
 	if (rst==1)
-		result=0;
+		result<=#1 0;
 	else begin
-		result= s_axi_rvalid ? bigresult[5:0] : result;
+		result<=#1 s_axi_rvalid ? bigresult[5:0] : result;
 end 
 end 
 
@@ -70,8 +68,8 @@ blk_mem_gen_0 axi4 (
   .s_axi_araddr({24'h0, a, b, 2'b00}),  // input wire [31 : 0] s_axi_araddr
   .s_axi_arvalid(readmodule),  		// input wire s_axi_arvalid
   .s_axi_arready(s_axi_arready),  	// output wire s_axi_arready
-  .s_axi_rdata(bigresult),      		// output wire [31 : 0] s_axi_rdata
-  .s_axi_rresp(s_axi_rresp),      			// output wire [1 : 0] s_axi_rresp
+  .s_axi_rdata(bigresult),      	// output wire [31 : 0] s_axi_rdata
+  .s_axi_rresp(),		      	// output wire [1 : 0] s_axi_rresp
   .s_axi_rvalid(s_axi_rvalid),    	// output wire s_axi_rvalid
   .s_axi_rready(1'b1)    		// input wire s_axi_rready
 );
