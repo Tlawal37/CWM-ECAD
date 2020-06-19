@@ -36,7 +36,7 @@ module top_tb(
  
        enable=0;
        err=0;
-	a = 3'b000;
+	a = 3'b001;
 	b = 3'b000;
 	
 	forever begin 
@@ -60,7 +60,7 @@ initial begin
       end
 
     //User's module
-    times_tables top (
+    times_tables mybram (
      	.a(a),
     	.result(result),
 	.b(b),
