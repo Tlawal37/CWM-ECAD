@@ -24,18 +24,41 @@ module times_tables(
 	input rst,
 	input [2:0]a,
 	input [2:0]b,
-	output [5:0]result);
+	output reg [5:0]result);
 
+
+
+ wire rsta_busy;
+ wire rstb_busy;
+ wire s_axi_arready;
  wire [31:0]bigresult;
- assign result = bigresult[5:0];
+ wire s_axi_arvalid;
+
+
+
+//Logic 
+ assign rsta_busy = rst?1'b1:1'b0;
+ assign rstb_busy = rst?1'b1:1'b0;
+
+ assign readmodule = read&(rsta_busy==0)&(rstb_busy==0)&s_axi_arready;
+
+
+always @(posedge clk)begin 
+	if (rst==1)
+		result=0;
+	else begin
+		result= s_axi_rvalid ? bigresult[5:0] : result;
+end 
+end 
+
 
 blk_mem_gen_0 axi4 (
   .rsta_busy(rsta_busy),    		// output wire rsta_busy
   .rstb_busy(rstb_busy),        	// output wire rstb_busy
   .s_aclk(clk),	                	// input wire s_aclk
-  .s_aresetn(rst),          		// input wire s_aresetn
-  .s_axi_awaddr(32'h0),    		// input wire [31 : 0] s_axi_awaddr
-  .s_axi_awvalid(32'h0),  		// input wire s_axi_awvalid
+  .s_aresetn(1'b1),          		// input wire s_aresetn
+  .s_axi_awaddr(32'b0),    		// input wire [31 : 0] s_axi_awaddr
+  .s_axi_awvalid(1'b0),  		// input wire s_axi_awvalid
   .s_axi_awready(),  			// output wire s_axi_awready
   .s_axi_wdata(32'h0),      		// input wire [31 : 0] s_axi_wdata
   .s_axi_wstrb(4'h0),      		// input wire [3 : 0] s_axi_wstrb
@@ -45,10 +68,10 @@ blk_mem_gen_0 axi4 (
   .s_axi_bvalid(),    			// output wire s_axi_bvalid
   .s_axi_bready(1'b1),    		// input wire s_axi_bready
   .s_axi_araddr({24'h0, a, b, 2'b00}),  // input wire [31 : 0] s_axi_araddr
-  .s_axi_arvalid(read),  		// input wire s_axi_arvalid
+  .s_axi_arvalid(readmodule),  		// input wire s_axi_arvalid
   .s_axi_arready(s_axi_arready),  	// output wire s_axi_arready
   .s_axi_rdata(bigresult),      		// output wire [31 : 0] s_axi_rdata
-  .s_axi_rresp(),      			// output wire [1 : 0] s_axi_rresp
+  .s_axi_rresp(s_axi_rresp),      			// output wire [1 : 0] s_axi_rresp
   .s_axi_rvalid(s_axi_rvalid),    	// output wire s_axi_rvalid
   .s_axi_rready(1'b1)    		// input wire s_axi_rready
 );

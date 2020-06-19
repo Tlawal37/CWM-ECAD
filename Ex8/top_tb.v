@@ -36,13 +36,14 @@ module top_tb(
      //Stimulus logic
      initial begin
  	rst = 1;
-        read=0;
+        read=1;
         err=0;
 	a = 3'b001;
 	b = 3'b000;
 	
 	forever begin 
 	#(CLK_PERIOD*2);
+	rst = 0;
 	read = 1;
 		if(result!==(a*b))begin 
 		  	   $display("*** TEST 1 FAILED! result is %d ***",result);
@@ -53,6 +54,7 @@ module top_tb(
 	#(CLK_PERIOD*2);
 	a <= a+3;
 	b<=b+6;
+	
 end
 end 
 
