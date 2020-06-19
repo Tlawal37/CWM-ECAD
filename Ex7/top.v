@@ -20,11 +20,12 @@
 module times_tables(
 	input read,
 	input clk,
-	input [2:0] a, b,
+	input [2:0]a,
+	input [2:0]b,
 	output [5:0] result);
  
 
-	wire a, b;
+//	wire a, b;
 
 
 

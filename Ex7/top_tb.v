@@ -17,7 +17,7 @@ module top_tb(
 
     //Registers and wires
     reg clk;
-    reg enable;
+    reg read;
     reg [2:0]a;
     reg [2:0]b;
     reg err;
@@ -34,21 +34,23 @@ module top_tb(
      //Stimulus logic
      initial begin
  
-       enable=0;
+       read=0;
        err=0;
 	a = 3'b001;
 	b = 3'b000;
 	
 	forever begin 
-	#CLK_PERIOD;
-		if(result!==(a*b[8:3]))begin 
+	#(CLK_PERIOD*2);
+	read = 1;
+		if(result!==(a*b))begin 
 		  	   $display("*** TEST 1 FAILED! result is %d ***",result);
 		  	   err=1;
 			  end 
 		 else
 			   err = 0;
-	a <= a+1;
-	b<=b+1;
+	#(CLK_PERIOD*2);
+	a <= a+3;
+	b<=b+6;
 end
 end 
 
